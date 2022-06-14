@@ -13,7 +13,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -34,17 +43,21 @@ class MainActivity : ComponentActivity() {
                             .fillMaxSize()
                             .wrapContentHeight(),
                     ) {
-                        InitColumn()
+//                        InitColumn()
+//                        Spacer(modifier = Modifier.height(30.dp))
+//                        InitRow()
+//                        Spacer(modifier = Modifier.height(30.dp))
+//                        UsingVariables()
+//                        Spacer(modifier = Modifier.height(30.dp))
+//                        IfCont()
+//                        Spacer(modifier = Modifier.height(30.dp))
+//                        ForFun()
+//                        Spacer(modifier = Modifier.height(30.dp))
+//                        UsingFun()
+//                        Spacer(modifier = Modifier.height(30.dp))
+//                        StateComponent()
                         Spacer(modifier = Modifier.height(30.dp))
-                        InitRow()
-                        Spacer(modifier = Modifier.height(30.dp))
-                        UsingVariables()
-                        Spacer(modifier = Modifier.height(30.dp))
-                        IfCont()
-                        Spacer(modifier = Modifier.height(30.dp))
-                        ForFun()
-                        Spacer(modifier = Modifier.height(30.dp))
-                        UsingFun()
+                        LabelText()
                     }
                 }
             }
@@ -181,11 +194,12 @@ fun ForFun() {
 @Composable
 fun UsingFun() {
     Column {
-        Text(text = createMessage(5), fontSize = 28.sp)
-        Text(text = createMessage(15), fontSize = 28.sp)
-        Text(text = createMessage(20), fontSize = 28.sp)
+        Text(text = createMessage(5), fontSize = 24.sp)
+        Text(text = createMessage(15), fontSize = 24.sp)
+        Text(text = createMessage(20), fontSize = 24.sp)
     }
 }
+
 fun createMessage(hour: Int): String =
     if (hour > 18) {
         "Добрый вечер"
@@ -194,6 +208,32 @@ fun createMessage(hour: Int): String =
     } else {
         "Доброе утро"
     }
+
+@Composable
+fun StateComponent() {
+    val (value, setValue) = remember { mutableStateOf("Hello Jetpack") }
+    Text(
+        text = value,
+        fontSize = 28.sp,
+        modifier = Modifier.clickable(onClick = { setValue("Hello com") })
+    )
+}
+
+@Composable
+fun LabelText() {
+    Text(
+        text = "Hello Jetpack Compose!", fontSize = 25.sp,
+        color = Color.Red,
+        fontStyle = FontStyle.Italic,
+        fontWeight = FontWeight.Bold,
+        fontFamily = FontFamily.Monospace,
+        letterSpacing = 1.3.sp,
+        textDecoration = TextDecoration.Underline,
+        textAlign = TextAlign.Center,
+        overflow = TextOverflow.Ellipsis,
+        style = TextStyle(shadow = Shadow(Color.LightGray , Offset(10.0f, 16.5f), 1.0f))
+    )
+}
 
 @Preview(showBackground = true)
 @Composable
