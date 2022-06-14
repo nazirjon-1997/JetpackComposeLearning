@@ -29,7 +29,15 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    initColumn()
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .wrapContentHeight(),
+                        verticalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        initColumn()
+                        initRow()
+                    }
                 }
             }
         }
@@ -38,7 +46,26 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun initColumn() {
-    Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.SpaceBetween) {
+    Column(
+        modifier = Modifier
+            .wrapContentWidth()
+            .wrapContentHeight(),
+        verticalArrangement = Arrangement.Center
+    ) {
+        Greeting("Android")
+        ScrollStateCompose()
+        EventClick()
+    }
+}
+
+@Composable
+fun initRow() {
+    Row(
+        modifier = Modifier
+            .wrapContentWidth()
+            .wrapContentHeight(),
+        horizontalArrangement = Arrangement.Center
+    ) {
         Greeting("Android")
         ScrollStateCompose()
         EventClick()
@@ -51,7 +78,7 @@ fun Greeting(name: String) {
     Box(
         contentAlignment = Alignment.CenterEnd,
         modifier = Modifier
-            .fillMaxWidth()
+            .wrapContentWidth()
             .background(Color.Blue)
     ) {
         Text(
@@ -59,13 +86,10 @@ fun Greeting(name: String) {
             fontSize = 22.sp,
             color = mGreen,
             modifier = Modifier
-                .size(width = 300.dp, height = 200.dp)
-                .padding(mPadding30)
-                .offset(x = 20.dp, y = 25.dp)
+                .padding(innerPadding)
                 .background(color = mBackground)
                 .widthIn(min = 100.dp, max = mWidth)
                 .heightIn(min = 50.dp, max = mHeight)
-                .padding(innerPadding)
         )
     }
 }
@@ -75,7 +99,7 @@ fun ScrollStateCompose() {
     Box(
         contentAlignment = Alignment.TopCenter,
         modifier = Modifier
-            .fillMaxWidth()
+            .wrapContentWidth()
             .background(Color.DarkGray)
     ) {
         Text(
@@ -97,7 +121,7 @@ fun EventClick() {
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
-            .fillMaxWidth()
+            .wrapContentWidth()
             .background(Color.Green)
     ) {
         val count = remember { mutableStateOf(0) }
