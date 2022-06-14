@@ -16,9 +16,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.nazirjon.jetpackcompose.ui.theme.JetpackComposeLearningTheme
-import com.nazirjon.jetpackcompose.ui.theme.mBackground
-import com.nazirjon.jetpackcompose.ui.theme.mGreen
+import com.nazirjon.jetpackcompose.ui.theme.*
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,15 +37,20 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String) {
+    val innerPadding = PaddingValues(top = mTop30, start = mStart30)
+
     Text(
         text = "Hello $name!",
         fontSize = 22.sp,
         color = mGreen,
         modifier = Modifier
+            .size(width = 300.dp, height = 200.dp)
+            .padding(mPadding30)
+            .offset(x = 20.dp, y = 25.dp)
             .background(color = mBackground)
-            .widthIn(min = 100.dp, max = 300.dp)
-            .heightIn(min = 50.dp, max = 200.dp)
-            .fillMaxSize(0.5f)
+            .widthIn(min = 100.dp, max = mWidth)
+            .heightIn(min = 50.dp, max = mHeight)
+            .padding(innerPadding)
     )
 }
 
