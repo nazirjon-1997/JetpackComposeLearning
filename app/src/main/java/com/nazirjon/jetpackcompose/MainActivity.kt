@@ -9,10 +9,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -30,6 +30,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     Greeting("Android")
                     ScrollStateCompose()
+                    EventClick()
                 }
             }
         }
@@ -69,11 +70,22 @@ fun ScrollStateCompose() {
     )
 }
 
+@Composable
+fun EventClick() {
+    val count = remember { mutableStateOf(0) }
+    Text(
+        "Clicks: ${count.value}",
+        fontSize = 28.sp,
+        modifier = Modifier.clickable(onClick = { count.value += 1 })
+    )
+}
+
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     JetpackComposeLearningTheme {
         Greeting("Android")
         ScrollStateCompose()
+        EventClick()
     }
 }
