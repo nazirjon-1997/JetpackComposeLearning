@@ -29,12 +29,19 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
-                    ScrollStateCompose()
-                    EventClick()
+                    initColumn()
                 }
             }
         }
+    }
+}
+
+@Composable
+fun initColumn() {
+    Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.SpaceBetween) {
+        Greeting("Android")
+        ScrollStateCompose()
+        EventClick()
     }
 }
 
@@ -44,7 +51,7 @@ fun Greeting(name: String) {
     Box(
         contentAlignment = Alignment.CenterEnd,
         modifier = Modifier
-            .size(400.dp, 250.dp)
+            .fillMaxWidth()
             .background(Color.Blue)
     ) {
         Text(
@@ -68,7 +75,7 @@ fun ScrollStateCompose() {
     Box(
         contentAlignment = Alignment.TopCenter,
         modifier = Modifier
-            .size(200.dp, 250.dp)
+            .fillMaxWidth()
             .background(Color.DarkGray)
     ) {
         Text(
@@ -88,9 +95,9 @@ fun ScrollStateCompose() {
 @Composable
 fun EventClick() {
     Box(
-        contentAlignment = Alignment.BottomCenter,
+        contentAlignment = Alignment.Center,
         modifier = Modifier
-            .size(200.dp, 250.dp)
+            .fillMaxWidth()
             .background(Color.Green)
     ) {
         val count = remember { mutableStateOf(0) }
@@ -108,8 +115,10 @@ fun EventClick() {
 @Composable
 fun DefaultPreview() {
     JetpackComposeLearningTheme {
-        Greeting("Android")
-        ScrollStateCompose()
-        EventClick()
+        Column() {
+            Greeting("Android")
+            ScrollStateCompose()
+            EventClick()
+        }
     }
 }
