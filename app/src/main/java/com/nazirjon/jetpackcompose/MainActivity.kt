@@ -3,7 +3,7 @@ package com.nazirjon.jetpackcompose
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -29,6 +29,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     Greeting("Android")
+                    ScrollStateCompose()
                 }
             }
         }
@@ -38,7 +39,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting(name: String) {
     val innerPadding = PaddingValues(top = mTop30, start = mStart30)
-
     Text(
         text = "Hello $name!",
         fontSize = 22.sp,
@@ -54,10 +54,26 @@ fun Greeting(name: String) {
     )
 }
 
+@Composable
+fun ScrollStateCompose() {
+    Text(
+        "What is Lorem Ipsum?\n" +
+                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n" +
+                "\n" +
+                "...............",
+        fontSize = 22.sp,
+        modifier = Modifier
+            .background(color = Color.Yellow)
+            .verticalScroll(rememberScrollState())
+            .horizontalScroll(rememberScrollState())
+    )
+}
+
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     JetpackComposeLearningTheme {
         Greeting("Android")
+        ScrollStateCompose()
     }
 }
