@@ -4,8 +4,8 @@ import androidx.compose.ui.unit.dp
 
 
 //custom size
-val mWidth = 300.dp
-val mHeight = 200.dp
+val mWidth = 180.dp
+val mHeight = 100.dp
 
 //padding
 val mPadding30 = 30.dp

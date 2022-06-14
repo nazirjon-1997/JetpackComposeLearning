@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nazirjon.jetpackcompose.ui.theme.*
@@ -24,7 +25,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             JetpackComposeLearningTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -33,42 +33,22 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier
                             .fillMaxSize()
                             .wrapContentHeight(),
-                        verticalArrangement = Arrangement.SpaceBetween
                     ) {
-                        initColumn()
-                        initRow()
+                        InitColumn()
+                        Spacer(modifier = Modifier.height(30.dp))
+                        InitRow()
+                        Spacer(modifier = Modifier.height(30.dp))
+                        UsingVariables()
+                        Spacer(modifier = Modifier.height(30.dp))
+                        IfCont()
+                        Spacer(modifier = Modifier.height(30.dp))
+                        ForFun()
+                        Spacer(modifier = Modifier.height(30.dp))
+                        UsingFun()
                     }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun initColumn() {
-    Column(
-        modifier = Modifier
-            .wrapContentWidth()
-            .wrapContentHeight(),
-        verticalArrangement = Arrangement.Center
-    ) {
-        Greeting("Android")
-        ScrollStateCompose()
-        EventClick()
-    }
-}
-
-@Composable
-fun initRow() {
-    Row(
-        modifier = Modifier
-            .wrapContentWidth()
-            .wrapContentHeight(),
-        horizontalArrangement = Arrangement.Center
-    ) {
-        Greeting("Android")
-        ScrollStateCompose()
-        EventClick()
     }
 }
 
@@ -86,9 +66,11 @@ fun Greeting(name: String) {
             fontSize = 22.sp,
             color = mGreen,
             modifier = Modifier
+                .size(width = 120.dp, height = 80.dp)
                 .padding(innerPadding)
+                //.offset(x = 4.dp, y = 2.dp)
                 .background(color = mBackground)
-                .widthIn(min = 100.dp, max = mWidth)
+                .widthIn(min = 120.dp, max = mWidth)
                 .heightIn(min = 50.dp, max = mHeight)
         )
     }
@@ -99,7 +81,7 @@ fun ScrollStateCompose() {
     Box(
         contentAlignment = Alignment.TopCenter,
         modifier = Modifier
-            .wrapContentWidth()
+            .width(200.dp)
             .background(Color.DarkGray)
     ) {
         Text(
@@ -134,6 +116,84 @@ fun EventClick() {
         )
     }
 }
+
+@Composable
+fun InitColumn() {
+    Column(
+        modifier = Modifier
+            .wrapContentWidth()
+            .wrapContentHeight(),
+        verticalArrangement = Arrangement.Top
+    ) {
+        Greeting("Android")
+        ScrollStateCompose()
+        EventClick()
+    }
+}
+
+@Composable
+fun InitRow() {
+    Row(
+        modifier = Modifier
+            .wrapContentWidth()
+            .wrapContentHeight(),
+        horizontalArrangement = Arrangement.Start
+    ) {
+        Greeting("Android")
+        ScrollStateCompose()
+        EventClick()
+    }
+}
+
+@Composable
+fun UsingVariables() {
+    val message = "Hello Test"
+    val size: TextUnit = 24.sp
+    Text(
+        text = message,
+        fontSize = size
+    )
+}
+
+@Composable
+fun IfCont() {
+    val hour = 19
+    if (hour < 18) {
+        Text(text = "Добрый день", fontSize = 28.sp)
+    } else {
+        Column {
+            Text(text = "Добрый", fontSize = 23.sp)
+            Text(text = "вечер", fontSize = 23.sp)
+        }
+    }
+}
+
+@Composable
+fun ForFun() {
+    val langs = listOf("Kotlin", "Java", "JavaScript", "Scala")
+    Column {
+        langs.forEach { lang ->
+            Text(text = lang, fontSize = 24.sp)
+        }
+    }
+}
+
+@Composable
+fun UsingFun() {
+    Column {
+        Text(text = createMessage(5), fontSize = 28.sp)
+        Text(text = createMessage(15), fontSize = 28.sp)
+        Text(text = createMessage(20), fontSize = 28.sp)
+    }
+}
+fun createMessage(hour: Int): String =
+    if (hour > 18) {
+        "Добрый вечер"
+    } else if (hour > 10) {
+        "Добрый день"
+    } else {
+        "Доброе утро"
+    }
 
 @Preview(showBackground = true)
 @Composable
