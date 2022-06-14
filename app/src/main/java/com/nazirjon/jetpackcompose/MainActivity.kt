@@ -20,6 +20,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nazirjon.jetpackcompose.ui.theme.JetpackComposeLearningTheme
+import com.nazirjon.jetpackcompose.ui.theme.mBackground
+import com.nazirjon.jetpackcompose.ui.theme.mGreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +43,11 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting(name: String) {
     Text(
-        text = "Hello $name!"
+        text = "Hello $name!",
+        color = mGreen,
+        modifier = Modifier
+            .background(color = mBackground)
+            .padding(30.dp)
     )
 }
 
