@@ -4,10 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -44,10 +41,13 @@ class MainActivity : ComponentActivity() {
 fun Greeting(name: String) {
     Text(
         text = "Hello $name!",
+        fontSize = 22.sp,
         color = mGreen,
         modifier = Modifier
             .background(color = mBackground)
-            .padding(30.dp)
+            .widthIn(min = 100.dp, max = 300.dp)
+            .heightIn(min = 50.dp, max = 200.dp)
+            .fillMaxSize(0.5f)
     )
 }
 
