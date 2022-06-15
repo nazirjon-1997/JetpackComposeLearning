@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Info
@@ -69,6 +70,8 @@ class MainActivity : ComponentActivity() {
                         MTextField()
                         Spacer(modifier = Modifier.height(30.dp))
                         MOutlinedTextField()
+                        Spacer(modifier = Modifier.height(30.dp))
+                        MModifierToggleable()
                     }
                 }
             }
@@ -291,23 +294,38 @@ fun MTextField() {
             )
         },
         placeholder = { Text("Hello", fontSize = 28.sp) },
-        colors = TextFieldDefaults.textFieldColors(textColor = Color.Red, containerColor = Color.Cyan)
+        colors = TextFieldDefaults.textFieldColors(
+            textColor = Color.Red,
+            containerColor = Color.Cyan
+        )
         //keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
     )
 }
 
 @Composable
-@Preview(showBackground = true)
 fun MOutlinedTextField() {
-    val message = remember{mutableStateOf("")}
+    val message = remember { mutableStateOf("") }
     OutlinedTextField(
         message.value,
-        {message.value = it},
-        textStyle = TextStyle(fontSize =  30.sp),
+        { message.value = it },
+        textStyle = TextStyle(fontSize = 30.sp),
         colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor= Color.Green, // цвет при получении фокуса
+            focusedBorderColor = Color.Green, // цвет при получении фокуса
             unfocusedBorderColor = Color.LightGray  // цвет при отсутствии фокуса
         )
+    )
+}
+
+@Composable
+@Preview(showBackground = true)
+fun MModifierToggleable() {
+    val checked = remember { mutableStateOf(false) }
+    Text(
+        modifier = Modifier.toggleable(
+            value = checked.value,
+            onValueChange = { checked.value = it }),
+        text = checked.value.toString(),
+        fontSize = 30.sp
     )
 }
 
