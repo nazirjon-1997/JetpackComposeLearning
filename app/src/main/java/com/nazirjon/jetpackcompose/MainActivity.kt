@@ -5,6 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -62,6 +65,10 @@ class MainActivity : ComponentActivity() {
                         MOutlinedButton()
                         Spacer(modifier = Modifier.height(30.dp))
                         MTextButton()
+                        Spacer(modifier = Modifier.height(30.dp))
+                        MTextField()
+                        Spacer(modifier = Modifier.height(30.dp))
+                        MOutlinedTextField()
                     }
                 }
             }
@@ -243,7 +250,10 @@ fun MText() {
 fun MButton() {
     Button(
         onClick = {},
-        colors = ButtonDefaults.buttonColors(containerColor = Color.Red, contentColor = Color.White),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color.Red,
+            contentColor = Color.White
+        ),
         border = BorderStroke(3.dp, Color.Green)
     ) {
         Text("Click", fontSize = 25.sp)
@@ -252,19 +262,53 @@ fun MButton() {
 
 @Composable
 fun MOutlinedButton() {
-    val label = remember{mutableStateOf("Click")}
-    OutlinedButton(onClick = {label.value = "Hello"}){
+    val label = remember { mutableStateOf("Click") }
+    OutlinedButton(onClick = { label.value = "Hello" }) {
         Text(label.value, fontSize = 25.sp)
     }
 }
 
 @Composable
-@Preview(showBackground = true)
 fun MTextButton() {
-    val label = remember{mutableStateOf("Click")}
-    TextButton(onClick = {label.value = "Hello"}){
+    val label = remember { mutableStateOf("Click") }
+    TextButton(onClick = { label.value = "Hello" }) {
         Text(label.value, fontSize = 25.sp)
     }
+}
+
+@Composable
+fun MTextField() {
+    val phone = remember { mutableStateOf("") }
+    TextField(
+        phone.value,
+        { phone.value = it },
+        textStyle = TextStyle(fontSize = 28.sp),
+        leadingIcon = { Icon(Icons.Filled.Check, contentDescription = "Проверено") },
+        trailingIcon = {
+            Icon(
+                Icons.Filled.Info,
+                contentDescription = "Дополнительная информация"
+            )
+        },
+        placeholder = { Text("Hello", fontSize = 28.sp) },
+        colors = TextFieldDefaults.textFieldColors(textColor = Color.Red, containerColor = Color.Cyan)
+        //keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
+    )
+}
+
+@Composable
+@Preview(showBackground = true)
+fun MOutlinedTextField() {
+    val message = remember{mutableStateOf("")}
+    OutlinedTextField(
+        message.value,
+        {message.value = it},
+        textStyle = TextStyle(fontSize =  30.sp),
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor= Color.Green, // цвет при получении фокуса
+            unfocusedBorderColor = Color.LightGray  // цвет при отсутствии фокуса
+        )
+    )
 }
 
 @Composable
