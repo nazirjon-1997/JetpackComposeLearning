@@ -18,6 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.modifier.modifierLocalConsumer
+import androidx.compose.ui.semantics.SemanticsProperties.ToggleableState
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
@@ -58,20 +60,22 @@ class MainActivity : ComponentActivity() {
 //                        UsingFun()
 //                        Spacer(modifier = Modifier.height(30.dp))
 //                        StateComponent()
-                        Spacer(modifier = Modifier.height(30.dp))
-                        MText()
-                        Spacer(modifier = Modifier.height(30.dp))
-                        MButton()
-                        Spacer(modifier = Modifier.height(30.dp))
-                        MOutlinedButton()
-                        Spacer(modifier = Modifier.height(30.dp))
-                        MTextButton()
-                        Spacer(modifier = Modifier.height(30.dp))
-                        MTextField()
-                        Spacer(modifier = Modifier.height(30.dp))
-                        MOutlinedTextField()
-                        Spacer(modifier = Modifier.height(30.dp))
+//                        Spacer(modifier = Modifier.height(30.dp))
+//                        MText()
+//                        Spacer(modifier = Modifier.height(30.dp))
+//                        MButton()
+//                        Spacer(modifier = Modifier.height(30.dp))
+//                        MOutlinedButton()
+//                        Spacer(modifier = Modifier.height(30.dp))
+//                        MTextButton()
+//                        Spacer(modifier = Modifier.height(30.dp))
+//                        MTextField()
+//                        Spacer(modifier = Modifier.height(30.dp))
+//                        MOutlinedTextField()
+//                        Spacer(modifier = Modifier.height(30.dp))
                         MModifierToggleable()
+                        Spacer(modifier = Modifier.height(30.dp))
+                        MCheckbox()
                     }
                 }
             }
@@ -251,73 +255,76 @@ fun MText() {
 
 @Composable
 fun MButton() {
-    Button(
-        onClick = {},
-        colors = ButtonDefaults.buttonColors(
-            containerColor = Color.Red,
-            contentColor = Color.White
-        ),
-        border = BorderStroke(3.dp, Color.Green)
-    ) {
-        Text("Click", fontSize = 25.sp)
-    }
-}
+    Column() {
+        Button(
+            onClick = {},
+            Modifier.padding(4.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Red,
+                contentColor = Color.White
+            ),
+            border = BorderStroke(3.dp, Color.Green)
+        ) {
+            Text("Click", fontSize = 25.sp)
+        }
 
-@Composable
-fun MOutlinedButton() {
-    val label = remember { mutableStateOf("Click") }
-    OutlinedButton(onClick = { label.value = "Hello" }) {
-        Text(label.value, fontSize = 25.sp)
-    }
-}
+        val label = remember { mutableStateOf("Click") }
+        OutlinedButton(
+            onClick = { label.value = "OutlinedButton" },
+            Modifier.padding(4.dp),
+        ) {
+            Text(label.value, fontSize = 25.sp)
+        }
 
-@Composable
-fun MTextButton() {
-    val label = remember { mutableStateOf("Click") }
-    TextButton(onClick = { label.value = "Hello" }) {
-        Text(label.value, fontSize = 25.sp)
+        val labelTextBtn = remember { mutableStateOf("Click") }
+        TextButton(
+            onClick = { labelTextBtn.value = "TextButton" },
+            Modifier.padding(4.dp),
+        ) {
+            Text(labelTextBtn.value, fontSize = 25.sp)
+        }
     }
 }
 
 @Composable
 fun MTextField() {
-    val phone = remember { mutableStateOf("") }
-    TextField(
-        phone.value,
-        { phone.value = it },
-        textStyle = TextStyle(fontSize = 28.sp),
-        leadingIcon = { Icon(Icons.Filled.Check, contentDescription = "Проверено") },
-        trailingIcon = {
-            Icon(
-                Icons.Filled.Info,
-                contentDescription = "Дополнительная информация"
+    Column {
+        val phone = remember { mutableStateOf("") }
+        TextField(
+            phone.value,
+            { phone.value = it },
+            Modifier.padding(4.dp),
+            textStyle = TextStyle(fontSize = 28.sp),
+            leadingIcon = { Icon(Icons.Filled.Check, contentDescription = "Проверено") },
+            trailingIcon = {
+                Icon(
+                    Icons.Filled.Info,
+                    contentDescription = "Дополнительная информация"
+                )
+            },
+            placeholder = { Text("Hello", fontSize = 28.sp) },
+            colors = TextFieldDefaults.textFieldColors(
+                textColor = Color.Red,
+                containerColor = Color.Cyan
             )
-        },
-        placeholder = { Text("Hello", fontSize = 28.sp) },
-        colors = TextFieldDefaults.textFieldColors(
-            textColor = Color.Red,
-            containerColor = Color.Cyan
+            //keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
         )
-        //keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
-    )
+
+        val message = remember { mutableStateOf("") }
+        OutlinedTextField(
+            message.value,
+            { message.value = it },
+            Modifier.padding(4.dp),
+            textStyle = TextStyle(fontSize = 30.sp),
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = Color.Green, // цвет при получении фокуса
+                unfocusedBorderColor = Color.LightGray  // цвет при отсутствии фокуса
+            )
+        )
+    }
 }
 
 @Composable
-fun MOutlinedTextField() {
-    val message = remember { mutableStateOf("") }
-    OutlinedTextField(
-        message.value,
-        { message.value = it },
-        textStyle = TextStyle(fontSize = 30.sp),
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = Color.Green, // цвет при получении фокуса
-            unfocusedBorderColor = Color.LightGray  // цвет при отсутствии фокуса
-        )
-    )
-}
-
-@Composable
-@Preview(showBackground = true)
 fun MModifierToggleable() {
     val checked = remember { mutableStateOf(false) }
     Text(
@@ -327,6 +334,45 @@ fun MModifierToggleable() {
         text = checked.value.toString(),
         fontSize = 30.sp
     )
+}
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+@Preview(showBackground = true)
+fun MCheckbox() {
+    Column {
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(4.dp)) {
+            val checkedState = remember { mutableStateOf(true) }
+            Checkbox(
+                checked = checkedState.value,
+                onCheckedChange = { checkedState.value = it },
+                modifier = Modifier.padding(5.dp),
+                colors = CheckboxDefaults.colors(
+                    checkedColor = Color.Cyan,
+                    checkmarkColor = Color.Red
+                )
+            )
+            Text("Выбрано", fontSize = 22.sp)
+        }
+
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(4.dp)) {
+            val checkedState =
+                remember { mutableStateOf(androidx.compose.ui.state.ToggleableState.Indeterminate) }
+            TriStateCheckbox(
+                state = checkedState.value,
+                onClick = {
+                    if (checkedState.value == androidx.compose.ui.state.ToggleableState.Indeterminate
+                        || checkedState.value == androidx.compose.ui.state.ToggleableState.Off
+                    )
+                        checkedState.value = androidx.compose.ui.state.ToggleableState.On
+                    else checkedState.value = androidx.compose.ui.state.ToggleableState.Off
+                },
+                modifier = Modifier.padding(5.dp),
+            )
+            Text("Выбрано", fontSize = 22.sp)
+        }
+    }
 }
 
 @Composable
