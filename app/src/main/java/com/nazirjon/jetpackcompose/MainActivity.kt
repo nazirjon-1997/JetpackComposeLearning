@@ -5,9 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -57,7 +55,13 @@ class MainActivity : ComponentActivity() {
 //                        Spacer(modifier = Modifier.height(30.dp))
 //                        StateComponent()
                         Spacer(modifier = Modifier.height(30.dp))
-                        LabelText()
+                        MText()
+                        Spacer(modifier = Modifier.height(30.dp))
+                        MButton()
+                        Spacer(modifier = Modifier.height(30.dp))
+                        MOutlinedButton()
+                        Spacer(modifier = Modifier.height(30.dp))
+                        MTextButton()
                     }
                 }
             }
@@ -220,7 +224,7 @@ fun StateComponent() {
 }
 
 @Composable
-fun LabelText() {
+fun MText() {
     Text(
         text = "Hello Jetpack Compose!", fontSize = 25.sp,
         color = Color.Red,
@@ -231,11 +235,38 @@ fun LabelText() {
         textDecoration = TextDecoration.Underline,
         textAlign = TextAlign.Center,
         overflow = TextOverflow.Ellipsis,
-        style = TextStyle(shadow = Shadow(Color.LightGray , Offset(10.0f, 16.5f), 1.0f))
+        style = TextStyle(shadow = Shadow(Color.LightGray, Offset(10.0f, 16.5f), 1.0f))
     )
 }
 
+@Composable
+fun MButton() {
+    Button(
+        onClick = {},
+        colors = ButtonDefaults.buttonColors(containerColor = Color.Red, contentColor = Color.White),
+        border = BorderStroke(3.dp, Color.Green)
+    ) {
+        Text("Click", fontSize = 25.sp)
+    }
+}
+
+@Composable
+fun MOutlinedButton() {
+    val label = remember{mutableStateOf("Click")}
+    OutlinedButton(onClick = {label.value = "Hello"}){
+        Text(label.value, fontSize = 25.sp)
+    }
+}
+
+@Composable
 @Preview(showBackground = true)
+fun MTextButton() {
+    val label = remember{mutableStateOf("Click")}
+    TextButton(onClick = {label.value = "Hello"}){
+        Text(label.value, fontSize = 25.sp)
+    }
+}
+
 @Composable
 fun DefaultPreview() {
     JetpackComposeLearningTheme {
