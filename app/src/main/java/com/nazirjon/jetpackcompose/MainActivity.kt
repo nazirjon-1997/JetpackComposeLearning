@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
@@ -72,11 +73,13 @@ class MainActivity : ComponentActivity() {
 //                        Spacer(modifier = Modifier.height(30.dp))
 //                        MOutlinedTextField()
 //                        Spacer(modifier = Modifier.height(30.dp))
-                        MModifierToggleable()
+//                        MModifierToggleable()
+//                        Spacer(modifier = Modifier.height(30.dp))
+//                        MCheckbox()
+//                        Spacer(modifier = Modifier.height(30.dp))
+//                        MSelectable()
                         Spacer(modifier = Modifier.height(30.dp))
-                        MCheckbox()
-                        Spacer(modifier = Modifier.height(30.dp))
-                        MSelectable()
+                        MRadioButton()
                     }
                 }
             }
@@ -376,14 +379,13 @@ fun MCheckbox() {
 }
 
 @Composable
-@Preview(showBackground = true)
 fun MSelectable() {
     Column {
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(4.dp)) {
             val selected = remember { mutableStateOf(true) }
 
             Text(
-                text= selected.value.toString(),
+                text = selected.value.toString(),
                 fontSize = 30.sp,
                 modifier = Modifier.selectable(
                     selected = selected.value,
@@ -395,13 +397,19 @@ fun MSelectable() {
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(4.dp)) {
             val colors = listOf(Color.Red, Color.Green, Color.Blue)
             val selectedOption = remember { mutableStateOf(colors[0]) }
-            Column(modifier =Modifier.padding(20.dp)) {
-                Box( Modifier.padding(10.dp).size(100.dp).background(color = selectedOption.value))
+            Column(modifier = Modifier.padding(20.dp)) {
+                Box(
+                    Modifier
+                        .padding(10.dp)
+                        .size(100.dp)
+                        .background(color = selectedOption.value)
+                )
 
                 colors.forEach { color ->
                     val selected = selectedOption.value == color
                     Box(
-                        Modifier.padding(8.dp)
+                        Modifier
+                            .padding(8.dp)
                             .size(60.dp)
                             .background(color = color)
                             .selectable(
@@ -409,7 +417,11 @@ fun MSelectable() {
                                 onClick = { selectedOption.value = color }
                             )
                             .border(
-                                width= if(selected){2.dp} else{0.dp},
+                                width = if (selected) {
+                                    2.dp
+                                } else {
+                                    0.dp
+                                },
                                 color = Color.Black
                             )
                     )
@@ -419,6 +431,53 @@ fun MSelectable() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+@Preview(showBackground = true)
+fun MRadioButton() {
+    Column {
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(4.dp)) {
+            val state = remember { mutableStateOf(true) }
+            Column(Modifier.selectableGroup())
+            {
+                RadioButton(
+                    selected = state.value,
+                    onClick = { state.value = true }
+                )
+                RadioButton(
+                    selected = !state.value,
+                    onClick = { state.value = false }
+                )
+            }
+        }
+
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(4.dp)) {
+            val languages = listOf("Kotlin", "Java", "Javascript", "Rust")
+            val (selectedOption, onOptionSelected) = remember { mutableStateOf(languages[0]) }
+
+            Column(Modifier.selectableGroup()) {
+                languages.forEach { text ->
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                            .height(56.dp)
+                            .selectable(
+                                selected = (text == selectedOption),
+                                onClick = { onOptionSelected(text) }
+                            ),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        RadioButton(
+                            selected = (text == selectedOption),
+                            onClick = null
+                        )
+                        Text(text = text, fontSize = 22.sp)
+                    }
+                }
+            }
+        }
+    }
+}
 
 @Composable
 fun DefaultPreview() {
