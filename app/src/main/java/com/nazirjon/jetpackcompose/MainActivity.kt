@@ -80,6 +80,8 @@ class MainActivity : ComponentActivity() {
 //                        MSelectable()
                         Spacer(modifier = Modifier.height(30.dp))
                         MRadioButton()
+                        Spacer(modifier = Modifier.height(30.dp))
+                        MIconButton()
                     }
                 }
             }
@@ -433,7 +435,6 @@ fun MSelectable() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-@Preview(showBackground = true)
 fun MRadioButton() {
     Column {
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(4.dp)) {
@@ -474,6 +475,40 @@ fun MRadioButton() {
                         Text(text = text, fontSize = 22.sp)
                     }
                 }
+            }
+        }
+    }
+}
+
+
+@Composable
+@Preview(showBackground = true)
+fun MIconButton() {
+    Column {
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(4.dp)) {
+            IconButton(onClick = {  }) {
+                Icon(
+                    Icons.Filled.Info,
+                    contentDescription = "Информация о приложении", modifier = Modifier.size(80.dp),
+                    tint = Color.Red
+                )
+            }
+        }
+
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(4.dp)) {
+            val checked = remember { mutableStateOf(false) }
+            Row(verticalAlignment = Alignment.CenterVertically){
+                IconToggleButton(checked = checked.value, onCheckedChange = { checked.value = it }) {
+                    Icon(
+                        Icons.Filled.Info,
+                        contentDescription = "Информация о приложении",
+                        tint = if (checked.value) Color(0xFFEC407A) else Color(0xFFB0BEC5)
+                    )
+                }
+                Text(
+                    text = if(checked.value) "Выбрано" else "Не выбрано",
+                    fontSize = 28.sp
+                )
             }
         }
     }
