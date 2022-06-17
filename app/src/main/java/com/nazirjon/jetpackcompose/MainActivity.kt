@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
@@ -74,6 +75,8 @@ class MainActivity : ComponentActivity() {
                         MModifierToggleable()
                         Spacer(modifier = Modifier.height(30.dp))
                         MCheckbox()
+                        Spacer(modifier = Modifier.height(30.dp))
+                        MSelectable()
                     }
                 }
             }
@@ -337,7 +340,6 @@ fun MModifierToggleable() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-@Preview(showBackground = true)
 fun MCheckbox() {
     Column {
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(4.dp)) {
@@ -372,6 +374,51 @@ fun MCheckbox() {
         }
     }
 }
+
+@Composable
+@Preview(showBackground = true)
+fun MSelectable() {
+    Column {
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(4.dp)) {
+            val selected = remember { mutableStateOf(true) }
+
+            Text(
+                text= selected.value.toString(),
+                fontSize = 30.sp,
+                modifier = Modifier.selectable(
+                    selected = selected.value,
+                    onClick = { selected.value = !selected.value }
+                )
+            )
+        }
+
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(4.dp)) {
+            val colors = listOf(Color.Red, Color.Green, Color.Blue)
+            val selectedOption = remember { mutableStateOf(colors[0]) }
+            Column(modifier =Modifier.padding(20.dp)) {
+                Box( Modifier.padding(10.dp).size(100.dp).background(color = selectedOption.value))
+
+                colors.forEach { color ->
+                    val selected = selectedOption.value == color
+                    Box(
+                        Modifier.padding(8.dp)
+                            .size(60.dp)
+                            .background(color = color)
+                            .selectable(
+                                selected = selected,
+                                onClick = { selectedOption.value = color }
+                            )
+                            .border(
+                                width= if(selected){2.dp} else{0.dp},
+                                color = Color.Black
+                            )
+                    )
+                }
+            }
+        }
+    }
+}
+
 
 @Composable
 fun DefaultPreview() {
