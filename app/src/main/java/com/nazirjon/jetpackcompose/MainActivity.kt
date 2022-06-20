@@ -9,7 +9,9 @@ import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -78,10 +80,12 @@ class MainActivity : ComponentActivity() {
 //                        MCheckbox()
 //                        Spacer(modifier = Modifier.height(30.dp))
 //                        MSelectable()
+//                        Spacer(modifier = Modifier.height(30.dp))
+//                        MRadioButton()
+//                        Spacer(modifier = Modifier.height(30.dp))
+//                        MIconButton()
                         Spacer(modifier = Modifier.height(30.dp))
-                        MRadioButton()
-                        Spacer(modifier = Modifier.height(30.dp))
-                        MIconButton()
+                        MFloatingActionButton()
                     }
                 }
             }
@@ -482,7 +486,6 @@ fun MRadioButton() {
 
 
 @Composable
-@Preview(showBackground = true)
 fun MIconButton() {
     Column {
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(4.dp)) {
@@ -510,6 +513,36 @@ fun MIconButton() {
                     fontSize = 28.sp
                 )
             }
+        }
+    }
+}
+
+
+@Composable
+@Preview(showBackground = true)
+fun MFloatingActionButton () {
+    Column {
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(4.dp)) {
+            Column{
+                val label = remember{ mutableStateOf("")}
+                Text(text = label.value, fontSize = 28.sp)
+                FloatingActionButton(onClick = {label.value = "Добавлено!" }) {
+                    Icon(Icons.Filled.Add, contentDescription = "Добавить")
+                }
+            }
+        }
+
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(4.dp)) {
+            val added = remember{ mutableStateOf(false)}
+            ExtendedFloatingActionButton(
+                icon = {
+                    Icon(
+                        if(added.value) Icons.Filled.Delete else Icons.Filled.Add,
+                        contentDescription = "Добавить"
+                    ) },
+                text = { Text(if(added.value) "Удалить" else "Добавить") },
+                onClick = {added.value = !added.value}
+            )
         }
     }
 }
