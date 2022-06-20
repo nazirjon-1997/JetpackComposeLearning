@@ -9,10 +9,7 @@ import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -84,8 +81,10 @@ class MainActivity : ComponentActivity() {
 //                        MRadioButton()
 //                        Spacer(modifier = Modifier.height(30.dp))
 //                        MIconButton()
+//                        Spacer(modifier = Modifier.height(30.dp))
+//                        MFloatingActionButton()
                         Spacer(modifier = Modifier.height(30.dp))
-                        MFloatingActionButton()
+                        MTopBottomBar()
                     }
                 }
             }
@@ -517,9 +516,7 @@ fun MIconButton() {
     }
 }
 
-
 @Composable
-@Preview(showBackground = true)
 fun MFloatingActionButton () {
     Column {
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(4.dp)) {
@@ -543,6 +540,46 @@ fun MFloatingActionButton () {
                 text = { Text(if(added.value) "Удалить" else "Добавить") },
                 onClick = {added.value = !added.value}
             )
+        }
+    }
+}
+
+@Composable
+@Preview(showBackground = true)
+fun MTopBottomBar () {
+    Column {
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(4.dp)) {
+//            TopAppBar {
+//                IconButton(onClick = {  }) {
+//                    Icon(Icons.Filled.Menu, contentDescription = "Меню")
+//                }
+//                Text("TopAppBar", fontSize = 22.sp)
+//                Spacer(Modifier.weight(1f, true))
+//
+//                IconButton(onClick = { }) {
+//                    Icon(Icons.Filled.Info, contentDescription = "Информация о приложении")
+//                }
+//                IconButton(onClick = { }) {
+//                    Icon(Icons.Filled.Search, contentDescription = "Поиск")
+//                }
+//            }
+        }
+
+        Row(verticalAlignment = Alignment.Bottom, modifier = Modifier.fillMaxHeight()) {
+            BottomAppBar() {
+                IconButton(onClick = {  }) {
+                    Icon(Icons.Filled.Menu, contentDescription = "Меню")
+                }
+                Text("BottomAppBar", fontSize = 22.sp)
+                Spacer(Modifier.weight(1f, true))
+
+                IconButton(onClick = { }) {
+                    Icon(Icons.Filled.Info, contentDescription = "Информация о приложении")
+                }
+                IconButton(onClick = { }) {
+                    Icon(Icons.Filled.Search, contentDescription = "Поиск")
+                }
+            }
         }
     }
 }
