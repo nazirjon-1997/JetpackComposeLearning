@@ -613,6 +613,7 @@ fun MScaffold() {
             )
         },
         floatingActionButtonPosition = FabPosition.Center,
+        isFloatingActionButtonDocked = true
     ) {
         Text(if (isAdded.value) "Товар добавлен" else "Корзина пуста", fontSize = 28.sp)
     }
