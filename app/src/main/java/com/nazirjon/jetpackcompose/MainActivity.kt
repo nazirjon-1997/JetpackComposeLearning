@@ -8,9 +8,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.selection.toggleable
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity() {
             JetpackComposeLearningTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = MaterialTheme.colors.background
                 ) {
                     Column(
                         modifier = Modifier
@@ -83,8 +83,10 @@ class MainActivity : ComponentActivity() {
 //                        MIconButton()
 //                        Spacer(modifier = Modifier.height(30.dp))
 //                        MFloatingActionButton()
-                        Spacer(modifier = Modifier.height(30.dp))
+//                        Spacer(modifier = Modifier.height(30.dp))
                         MTopBottomBar()
+                        Spacer(modifier = Modifier.height(30.dp))
+                        MScaffold()
                     }
                 }
             }
@@ -269,7 +271,7 @@ fun MButton() {
             onClick = {},
             Modifier.padding(4.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Red,
+                backgroundColor = Color.Red,
                 contentColor = Color.White
             ),
             border = BorderStroke(3.dp, Color.Green)
@@ -314,7 +316,7 @@ fun MTextField() {
             placeholder = { Text("Hello", fontSize = 28.sp) },
             colors = TextFieldDefaults.textFieldColors(
                 textColor = Color.Red,
-                containerColor = Color.Cyan
+                backgroundColor = Color.Cyan
             )
             //keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
         )
@@ -345,8 +347,6 @@ fun MModifierToggleable() {
     )
 }
 
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MCheckbox() {
     Column {
@@ -436,7 +436,6 @@ fun MSelectable() {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MRadioButton() {
     Column {
@@ -488,7 +487,7 @@ fun MRadioButton() {
 fun MIconButton() {
     Column {
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(4.dp)) {
-            IconButton(onClick = {  }) {
+            IconButton(onClick = { }) {
                 Icon(
                     Icons.Filled.Info,
                     contentDescription = "Информация о приложении", modifier = Modifier.size(80.dp),
@@ -499,8 +498,10 @@ fun MIconButton() {
 
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(4.dp)) {
             val checked = remember { mutableStateOf(false) }
-            Row(verticalAlignment = Alignment.CenterVertically){
-                IconToggleButton(checked = checked.value, onCheckedChange = { checked.value = it }) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                IconToggleButton(
+                    checked = checked.value,
+                    onCheckedChange = { checked.value = it }) {
                     Icon(
                         Icons.Filled.Info,
                         contentDescription = "Информация о приложении",
@@ -508,7 +509,7 @@ fun MIconButton() {
                     )
                 }
                 Text(
-                    text = if(checked.value) "Выбрано" else "Не выбрано",
+                    text = if (checked.value) "Выбрано" else "Не выбрано",
                     fontSize = 28.sp
                 )
             }
@@ -517,57 +518,57 @@ fun MIconButton() {
 }
 
 @Composable
-fun MFloatingActionButton () {
+fun MFloatingActionButton() {
     Column {
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(4.dp)) {
-            Column{
-                val label = remember{ mutableStateOf("")}
+            Column {
+                val label = remember { mutableStateOf("") }
                 Text(text = label.value, fontSize = 28.sp)
-                FloatingActionButton(onClick = {label.value = "Добавлено!" }) {
+                FloatingActionButton(onClick = { label.value = "Добавлено!" }) {
                     Icon(Icons.Filled.Add, contentDescription = "Добавить")
                 }
             }
         }
 
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(4.dp)) {
-            val added = remember{ mutableStateOf(false)}
+            val added = remember { mutableStateOf(false) }
             ExtendedFloatingActionButton(
                 icon = {
                     Icon(
-                        if(added.value) Icons.Filled.Delete else Icons.Filled.Add,
+                        if (added.value) Icons.Filled.Delete else Icons.Filled.Add,
                         contentDescription = "Добавить"
-                    ) },
-                text = { Text(if(added.value) "Удалить" else "Добавить") },
-                onClick = {added.value = !added.value}
+                    )
+                },
+                text = { Text(if (added.value) "Удалить" else "Добавить") },
+                onClick = { added.value = !added.value }
             )
         }
     }
 }
 
 @Composable
-@Preview(showBackground = true)
-fun MTopBottomBar () {
+fun MTopBottomBar() {
     Column {
-        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(4.dp)) {
-//            TopAppBar {
-//                IconButton(onClick = {  }) {
-//                    Icon(Icons.Filled.Menu, contentDescription = "Меню")
-//                }
-//                Text("TopAppBar", fontSize = 22.sp)
-//                Spacer(Modifier.weight(1f, true))
-//
-//                IconButton(onClick = { }) {
-//                    Icon(Icons.Filled.Info, contentDescription = "Информация о приложении")
-//                }
-//                IconButton(onClick = { }) {
-//                    Icon(Icons.Filled.Search, contentDescription = "Поиск")
-//                }
-//            }
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(0.dp)) {
+            TopAppBar {
+                IconButton(onClick = {  }) {
+                    Icon(Icons.Filled.Menu, contentDescription = "Меню")
+                }
+                Text("TopAppBar", fontSize = 22.sp)
+                Spacer(Modifier.weight(1f, true))
+
+                IconButton(onClick = { }) {
+                    Icon(Icons.Filled.Info, contentDescription = "Информация о приложении")
+                }
+                IconButton(onClick = { }) {
+                    Icon(Icons.Filled.Search, contentDescription = "Поиск")
+                }
+            }
         }
 
         Row(verticalAlignment = Alignment.Bottom, modifier = Modifier.fillMaxHeight()) {
             BottomAppBar() {
-                IconButton(onClick = {  }) {
+                IconButton(onClick = { }) {
                     Icon(Icons.Filled.Menu, contentDescription = "Меню")
                 }
                 Text("BottomAppBar", fontSize = 22.sp)
@@ -582,6 +583,39 @@ fun MTopBottomBar () {
             }
         }
     }
+}
+
+@Composable
+@Preview(showBackground = true)
+fun MScaffold() {
+    val isAdded = remember { mutableStateOf(false) }
+//    Scaffold(
+//        topBar = { TopAppBar { Text("METANIT.COM", fontSize = 22.sp) } },
+//        bottomBar = {
+//            BottomAppBar {
+//                IconButton(onClick = { }) { Icon(Icons.Filled.Menu, contentDescription = "Меню") }
+//                Spacer(Modifier.weight(1f, true))
+//                IconButton(onClick = { }) {
+//                    Icon(
+//                        Icons.Filled.Search,
+//                        contentDescription = "Поиск"
+//                    )
+//                }
+//            }
+//        },
+//        floatingActionButton = {
+//            FloatingActionButton(
+//                content = {
+//                    if (isAdded.value) Icon(Icons.Filled.Clear, contentDescription = "Удалить")
+//                    else Icon(Icons.Filled.Add, contentDescription = "Добавить")
+//                },
+//                onClick = { isAdded.value = !isAdded.value }
+//            )
+//        },
+//        floatingActionButtonPosition = FabPosition.Center,
+//    ) {
+//        Text(if (isAdded.value) "Товар добавлен" else "Корзина пуста", fontSize = 28.sp)
+//    }
 }
 
 @Composable
