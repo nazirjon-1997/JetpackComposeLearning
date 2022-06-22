@@ -84,8 +84,8 @@ class MainActivity : ComponentActivity() {
 //                        Spacer(modifier = Modifier.height(30.dp))
 //                        MFloatingActionButton()
 //                        Spacer(modifier = Modifier.height(30.dp))
-                        MTopBottomBar()
-                        Spacer(modifier = Modifier.height(30.dp))
+//                        MTopBottomBar()
+//                        Spacer(modifier = Modifier.height(30.dp))
                         MScaffold()
                     }
                 }
@@ -589,33 +589,33 @@ fun MTopBottomBar() {
 @Preview(showBackground = true)
 fun MScaffold() {
     val isAdded = remember { mutableStateOf(false) }
-//    Scaffold(
-//        topBar = { TopAppBar { Text("METANIT.COM", fontSize = 22.sp) } },
-//        bottomBar = {
-//            BottomAppBar {
-//                IconButton(onClick = { }) { Icon(Icons.Filled.Menu, contentDescription = "Меню") }
-//                Spacer(Modifier.weight(1f, true))
-//                IconButton(onClick = { }) {
-//                    Icon(
-//                        Icons.Filled.Search,
-//                        contentDescription = "Поиск"
-//                    )
-//                }
-//            }
-//        },
-//        floatingActionButton = {
-//            FloatingActionButton(
-//                content = {
-//                    if (isAdded.value) Icon(Icons.Filled.Clear, contentDescription = "Удалить")
-//                    else Icon(Icons.Filled.Add, contentDescription = "Добавить")
-//                },
-//                onClick = { isAdded.value = !isAdded.value }
-//            )
-//        },
-//        floatingActionButtonPosition = FabPosition.Center,
-//    ) {
-//        Text(if (isAdded.value) "Товар добавлен" else "Корзина пуста", fontSize = 28.sp)
-//    }
+    Scaffold(
+        topBar = { TopAppBar { Text("TopAppBar", fontSize = 22.sp) } },
+        bottomBar = {
+            BottomAppBar {
+                IconButton(onClick = { }) { Icon(Icons.Filled.Menu, contentDescription = "Меню") }
+                Spacer(Modifier.weight(1f, true))
+                IconButton(onClick = { }) {
+                    Icon(
+                        Icons.Filled.Search,
+                        contentDescription = "Поиск"
+                    )
+                }
+            }
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                content = {
+                    if (isAdded.value) Icon(Icons.Filled.Clear, contentDescription = "Удалить")
+                    else Icon(Icons.Filled.Add, contentDescription = "Добавить")
+                },
+                onClick = { isAdded.value = !isAdded.value }
+            )
+        },
+        floatingActionButtonPosition = FabPosition.Center,
+    ) {
+        Text(if (isAdded.value) "Товар добавлен" else "Корзина пуста", fontSize = 28.sp)
+    }
 }
 
 @Composable
