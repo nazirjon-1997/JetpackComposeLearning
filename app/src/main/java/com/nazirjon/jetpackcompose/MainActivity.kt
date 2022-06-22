@@ -14,6 +14,7 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -31,6 +32,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nazirjon.jetpackcompose.ui.theme.*
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,7 +88,8 @@ class MainActivity : ComponentActivity() {
 //                        Spacer(modifier = Modifier.height(30.dp))
 //                        MTopBottomBar()
 //                        Spacer(modifier = Modifier.height(30.dp))
-                        MScaffold()
+//                        MScaffold()
+                        MSnackbar()
                     }
                 }
             }
@@ -586,7 +589,6 @@ fun MTopBottomBar() {
 }
 
 @Composable
-@Preview(showBackground = true)
 fun MScaffold() {
     val isAdded = remember { mutableStateOf(false) }
     Scaffold(
@@ -616,6 +618,33 @@ fun MScaffold() {
         isFloatingActionButtonDocked = true
     ) {
         Text(if (isAdded.value) "Товар добавлен" else "Корзина пуста", fontSize = 28.sp)
+    }
+}
+
+@Composable
+@Preview(showBackground = true)
+fun MSnackbar() {
+    val scope = rememberCoroutineScope()
+    val scaffoldState = rememberScaffoldState()
+    val count = remember{ mutableStateOf(0) }
+    Scaffold(
+        scaffoldState = scaffoldState,
+        floatingActionButton = {
+            FloatingActionButton(
+                content = {Icon(Icons.Filled.Add, contentDescription = "Добавить")},
+                onClick = {
+                    scope.launch {
+                        val result = scaffoldState.snackbarHostState.showSnackbar("Count: ${count.value}", "Click")
+                        when (result) {
+                            SnackbarResult.ActionPerformed -> { count.value++; }
+                            SnackbarResult.Dismissed -> { count.value--; }
+                        }
+                    }
+                }
+            )
+        }
+    ){
+        Text("Count", fontSize = 28.sp)
     }
 }
 
