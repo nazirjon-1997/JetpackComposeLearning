@@ -11,10 +11,7 @@ import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -90,7 +87,8 @@ class MainActivity : ComponentActivity() {
 //                        Spacer(modifier = Modifier.height(30.dp))
 //                        MScaffold()
 //                        MSnackbar()
-                        MDrawer()
+//                        MDrawer()
+                        MSlider()
                     }
                 }
             }
@@ -555,7 +553,7 @@ fun MTopBottomBar() {
     Column {
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(0.dp)) {
             TopAppBar {
-                IconButton(onClick = {  }) {
+                IconButton(onClick = { }) {
                     Icon(Icons.Filled.Menu, contentDescription = "Меню")
                 }
                 Text("TopAppBar", fontSize = 22.sp)
@@ -626,58 +624,84 @@ fun MScaffold() {
 fun MSnackbar() {
     val scope = rememberCoroutineScope()
     val scaffoldState = rememberScaffoldState()
-    val count = remember{ mutableStateOf(0) }
+    val count = remember { mutableStateOf(0) }
     Scaffold(
         scaffoldState = scaffoldState,
         floatingActionButton = {
             FloatingActionButton(
-                content = {Icon(Icons.Filled.Add, contentDescription = "Добавить")},
+                content = { Icon(Icons.Filled.Add, contentDescription = "Добавить") },
                 onClick = {
                     scope.launch {
-                        val result = scaffoldState.snackbarHostState.showSnackbar("Count: ${count.value}", "Click")
+                        val result = scaffoldState.snackbarHostState.showSnackbar(
+                            "Count: ${count.value}",
+                            "Click"
+                        )
                         when (result) {
-                            SnackbarResult.ActionPerformed -> { count.value++; }
-                            SnackbarResult.Dismissed -> { count.value--; }
+                            SnackbarResult.ActionPerformed -> {
+                                count.value++; }
+                            SnackbarResult.Dismissed -> {
+                                count.value--; }
                         }
                     }
                 }
             )
         }
-    ){
+    ) {
         Text("Count", fontSize = 28.sp)
     }
 }
 
 @Composable
-@Preview(showBackground = true)
 fun MDrawer() {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
-    val selectedItem = remember{ mutableStateOf("")}
+    val selectedItem = remember { mutableStateOf("") }
     val items = listOf("Главная", "Контакты", "О приложении")
     Scaffold(
         scaffoldState = scaffoldState,
-        drawerContent={
+        drawerContent = {
             for (item in items) {
                 Text(
                     item,
                     fontSize = 28.sp,
                     modifier = Modifier.clickable {
                         selectedItem.value = item
-                        scope.launch{ scaffoldState.drawerState.close() }
+                        scope.launch { scaffoldState.drawerState.close() }
                     }
                 )
             }
         }
-    ){
-        Column{
+    ) {
+        Column {
             Button(onClick = {
-                scope.launch{ scaffoldState.drawerState.open() }
+                scope.launch { scaffoldState.drawerState.open() }
             }) {
                 Text("Меню", fontSize = 28.sp)
             }
             Text("Выбран пункт: ${selectedItem.value}", fontSize = 28.sp)
         }
+    }
+}
+
+@Composable
+@Preview(showBackground = true)
+fun MSlider() {
+    var sliderPosition by remember{mutableStateOf(0f)}
+    Column{
+        Text(text = "Текущее значение: $sliderPosition", fontSize = 22.sp)
+        Slider(
+            value = sliderPosition,
+            valueRange = 0f..10f,
+            steps = 9,
+            onValueChange = { sliderPosition = it },
+            colors = SliderDefaults.colors(
+                thumbColor = Color(0xFFB71C1C),
+                activeTrackColor = Color(0xFFEF9A9A),
+                inactiveTrackColor = Color(0xFFFFEBEE),
+                inactiveTickColor = Color(0xFFEF9A9A),
+                activeTickColor = Color(0xFFB71C1C)
+            )
+        )
     }
 }
 
