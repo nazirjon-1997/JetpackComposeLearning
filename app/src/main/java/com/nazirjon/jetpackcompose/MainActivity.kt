@@ -89,7 +89,8 @@ class MainActivity : ComponentActivity() {
 //                        MTopBottomBar()
 //                        Spacer(modifier = Modifier.height(30.dp))
 //                        MScaffold()
-                        MSnackbar()
+//                        MSnackbar()
+                        MDrawer()
                     }
                 }
             }
@@ -622,7 +623,6 @@ fun MScaffold() {
 }
 
 @Composable
-@Preview(showBackground = true)
 fun MSnackbar() {
     val scope = rememberCoroutineScope()
     val scaffoldState = rememberScaffoldState()
@@ -645,6 +645,39 @@ fun MSnackbar() {
         }
     ){
         Text("Count", fontSize = 28.sp)
+    }
+}
+
+@Composable
+@Preview(showBackground = true)
+fun MDrawer() {
+    val scaffoldState = rememberScaffoldState()
+    val scope = rememberCoroutineScope()
+    val selectedItem = remember{ mutableStateOf("")}
+    val items = listOf("Главная", "Контакты", "О приложении")
+    Scaffold(
+        scaffoldState = scaffoldState,
+        drawerContent={
+            for (item in items) {
+                Text(
+                    item,
+                    fontSize = 28.sp,
+                    modifier = Modifier.clickable {
+                        selectedItem.value = item
+                        scope.launch{ scaffoldState.drawerState.close() }
+                    }
+                )
+            }
+        }
+    ){
+        Column{
+            Button(onClick = {
+                scope.launch{ scaffoldState.drawerState.open() }
+            }) {
+                Text("Меню", fontSize = 28.sp)
+            }
+            Text("Выбран пункт: ${selectedItem.value}", fontSize = 28.sp)
+        }
     }
 }
 
