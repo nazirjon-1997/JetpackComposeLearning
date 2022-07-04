@@ -89,7 +89,8 @@ class MainActivity : ComponentActivity() {
 //                        MSnackbar()
 //                        MDrawer()
 //                        MSlider()
-                        MSwitch()
+//                        MSwitch()
+                        MAlert()
                     }
                 }
             }
@@ -706,18 +707,21 @@ fun MSlider() {
 }
 
 @Composable
-@Preview(showBackground = true)
 fun MSwitch() {
     val checkedState = remember { mutableStateOf(false) }
     val textColor = remember { mutableStateOf(Color.Unspecified) }
-    Column(modifier = Modifier.fillMaxSize().padding(10.dp)){
-        Row (verticalAlignment = Alignment.CenterVertically ){
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(10.dp)
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
             Text("Красный цвет", fontSize = 22.sp, color = textColor.value)
             Switch(
                 checked = checkedState.value,
                 onCheckedChange = {
                     checkedState.value = it
-                    if(checkedState.value) textColor.value = Color(0xFFC62828)
+                    if (checkedState.value) textColor.value = Color(0xFFC62828)
                     else textColor.value = Color.Unspecified
                 },
                 colors = SwitchDefaults.colors(
@@ -728,6 +732,45 @@ fun MSwitch() {
                 )
             )
         }
+    }
+}
+
+@Composable
+@Preview(showBackground = true)
+fun MAlert() {
+    val openDialog = remember { mutableStateOf(false) }
+    Button(
+        onClick = { openDialog.value = true }
+    ) {
+        Text("Удалить", fontSize = 22.sp)
+    }
+    if (openDialog.value) {
+        AlertDialog(
+            onDismissRequest = {
+                openDialog.value = false
+            },
+            title = { Text(text = "Подтверждение действия") },
+            text = { Text("Вы действительно хотите удалить выбранный элемент?") },
+            buttons = {
+                Row(
+                    modifier = Modifier.padding(all = 8.dp),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Button(
+                        modifier = Modifier.weight(1f).padding(all = 4.dp),
+                        onClick = { openDialog.value = false }
+                    ) {
+                        Text("Удалить")
+                    }
+                    Button(
+                        modifier = Modifier.weight(1f).padding(all = 4.dp),
+                        onClick = { openDialog.value = false }
+                    ) {
+                        Text("Отмена")
+                    }
+                }
+            }
+        )
     }
 }
 
