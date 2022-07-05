@@ -46,51 +46,32 @@ class MainActivity : ComponentActivity() {
                             .wrapContentHeight(),
                     ) {
 //                        InitColumn()
-//                        Spacer(modifier = Modifier.height(30.dp))
 //                        InitRow()
-//                        Spacer(modifier = Modifier.height(30.dp))
 //                        UsingVariables()
-//                        Spacer(modifier = Modifier.height(30.dp))
 //                        IfCont()
-//                        Spacer(modifier = Modifier.height(30.dp))
 //                        ForFun()
-//                        Spacer(modifier = Modifier.height(30.dp))
 //                        UsingFun()
-//                        Spacer(modifier = Modifier.height(30.dp))
 //                        StateComponent()
-//                        Spacer(modifier = Modifier.height(30.dp))
 //                        MText()
-//                        Spacer(modifier = Modifier.height(30.dp))
 //                        MButton()
-//                        Spacer(modifier = Modifier.height(30.dp))
 //                        MOutlinedButton()
-//                        Spacer(modifier = Modifier.height(30.dp))
 //                        MTextButton()
-//                        Spacer(modifier = Modifier.height(30.dp))
 //                        MTextField()
-//                        Spacer(modifier = Modifier.height(30.dp))
 //                        MOutlinedTextField()
-//                        Spacer(modifier = Modifier.height(30.dp))
 //                        MModifierToggleable()
-//                        Spacer(modifier = Modifier.height(30.dp))
 //                        MCheckbox()
-//                        Spacer(modifier = Modifier.height(30.dp))
 //                        MSelectable()
-//                        Spacer(modifier = Modifier.height(30.dp))
 //                        MRadioButton()
-//                        Spacer(modifier = Modifier.height(30.dp))
 //                        MIconButton()
-//                        Spacer(modifier = Modifier.height(30.dp))
 //                        MFloatingActionButton()
-//                        Spacer(modifier = Modifier.height(30.dp))
 //                        MTopBottomBar()
-//                        Spacer(modifier = Modifier.height(30.dp))
 //                        MScaffold()
 //                        MSnackbar()
 //                        MDrawer()
 //                        MSlider()
 //                        MSwitch()
-                        MAlert()
+//                        MAlert()
+                        MDropdownMenu()
                     }
                 }
             }
@@ -736,7 +717,6 @@ fun MSwitch() {
 }
 
 @Composable
-@Preview(showBackground = true)
 fun MAlert() {
     val openDialog = remember { mutableStateOf(false) }
     Button(
@@ -757,13 +737,17 @@ fun MAlert() {
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Button(
-                        modifier = Modifier.weight(1f).padding(all = 4.dp),
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(all = 4.dp),
                         onClick = { openDialog.value = false }
                     ) {
                         Text("Удалить")
                     }
                     Button(
-                        modifier = Modifier.weight(1f).padding(all = 4.dp),
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(all = 4.dp),
                         onClick = { openDialog.value = false }
                     ) {
                         Text("Отмена")
@@ -771,6 +755,37 @@ fun MAlert() {
                 }
             }
         )
+    }
+}
+
+
+@Composable
+@Preview(showBackground = true)
+fun MDropdownMenu() {
+    var expanded by remember { mutableStateOf(false) }
+    var selectedOption by remember { mutableStateOf("") }
+    Column{
+        Text("Выбран пункт: $selectedOption")
+        Box {
+            IconButton(onClick = { expanded = true }) {
+                Icon(Icons.Default.MoreVert, contentDescription = "Показать меню")
+            }
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            ) {
+                DropdownMenuItem(onClick = { selectedOption="Copy"}) {
+                    Text("Скопировать")
+                }
+                DropdownMenuItem(onClick = { selectedOption="Paste"}) {
+                    Text("Вставить")
+                }
+                Divider()
+                DropdownMenuItem(onClick = { selectedOption="Settings"}) {
+                    Text("Настройки")
+                }
+            }
+        }
     }
 }
 
