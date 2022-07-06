@@ -2,7 +2,6 @@ package com.nazirjon.jetpackcompose.ui.theme
 
 import androidx.compose.ui.unit.dp
 
-
 //custom size
 val mWidth = 180.dp
 val mHeight = 100.dp

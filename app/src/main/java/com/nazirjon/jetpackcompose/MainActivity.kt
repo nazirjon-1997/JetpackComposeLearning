@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
@@ -73,7 +74,8 @@ class MainActivity : ComponentActivity() {
 //                        MSwitch()
 //                        MAlert()
 //                        MDropdownMenu()
-                        MCircularProgressIndicator()
+//                        MCircularProgressIndicator()
+                        MStringResource()
                     }
                 }
             }
@@ -469,7 +471,6 @@ fun MRadioButton() {
     }
 }
 
-
 @Composable
 fun MIconButton() {
     Column {
@@ -790,7 +791,6 @@ fun MDropdownMenu() {
 }
 
 @Composable
-@Preview(showBackground = true)
 fun MCircularProgressIndicator() {
     var progress by remember { mutableStateOf(0.0f) }
     val scope = rememberCoroutineScope()
@@ -813,6 +813,20 @@ fun MCircularProgressIndicator() {
     }
 }
 
+@Composable
+@Preview(showBackground = true)
+fun MStringResource() {
+    Column{
+        Text(
+            text = stringResource(R.string.user_data, "Tom", 37, "JetBrains"),
+            fontSize = 28.sp
+        )
+        Text(
+            text = stringResource(R.string.user_data, "Bob", 41, "Google"),
+            fontSize = 28.sp
+        )
+    }
+}
 
 @Composable
 fun DefaultPreview() {
