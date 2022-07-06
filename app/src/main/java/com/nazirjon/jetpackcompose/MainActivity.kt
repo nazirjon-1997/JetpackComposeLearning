@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nazirjon.jetpackcompose.ui.theme.*
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -71,7 +72,8 @@ class MainActivity : ComponentActivity() {
 //                        MSlider()
 //                        MSwitch()
 //                        MAlert()
-                        MDropdownMenu()
+//                        MDropdownMenu()
+                        MCircularProgressIndicator()
                     }
                 }
             }
@@ -758,13 +760,11 @@ fun MAlert() {
     }
 }
 
-
 @Composable
-@Preview(showBackground = true)
 fun MDropdownMenu() {
     var expanded by remember { mutableStateOf(false) }
     var selectedOption by remember { mutableStateOf("") }
-    Column{
+    Column {
         Text("Выбран пункт: $selectedOption")
         Box {
             IconButton(onClick = { expanded = true }) {
@@ -774,20 +774,45 @@ fun MDropdownMenu() {
                 expanded = expanded,
                 onDismissRequest = { expanded = false }
             ) {
-                DropdownMenuItem(onClick = { selectedOption="Copy"}) {
+                DropdownMenuItem(onClick = { selectedOption = "Copy" }) {
                     Text("Скопировать")
                 }
-                DropdownMenuItem(onClick = { selectedOption="Paste"}) {
+                DropdownMenuItem(onClick = { selectedOption = "Paste" }) {
                     Text("Вставить")
                 }
                 Divider()
-                DropdownMenuItem(onClick = { selectedOption="Settings"}) {
+                DropdownMenuItem(onClick = { selectedOption = "Settings" }) {
                     Text("Настройки")
                 }
             }
         }
     }
 }
+
+@Composable
+@Preview(showBackground = true)
+fun MCircularProgressIndicator() {
+    var progress by remember { mutableStateOf(0.0f) }
+    val scope = rememberCoroutineScope()
+
+    Column{
+        Text("Статус: $progress", fontSize = 22.sp)
+        OutlinedButton(
+            onClick = {
+                scope.launch {
+                    while (progress < 1f) {
+                        progress += 0.1f
+                        delay(1000L)
+                    }
+                }
+            }
+        ) {
+            Text("Запустить", fontSize = 22.sp)
+        }
+        CircularProgressIndicator(progress = progress)
+    }
+}
+
 
 @Composable
 fun DefaultPreview() {
