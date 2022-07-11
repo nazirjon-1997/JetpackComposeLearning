@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -75,7 +76,8 @@ class MainActivity : ComponentActivity() {
 //                        MAlert()
 //                        MDropdownMenu()
 //                        MCircularProgressIndicator()
-                        MStringResource()
+//                        MStringResource()
+                        MImage()
                     }
                 }
             }
@@ -814,7 +816,6 @@ fun MCircularProgressIndicator() {
 }
 
 @Composable
-@Preview(showBackground = true)
 fun MStringResource() {
     Column{
         Text(
@@ -826,6 +827,12 @@ fun MStringResource() {
             fontSize = 28.sp
         )
     }
+}
+
+@Composable
+@Preview(showBackground = true)
+fun MImage() {
+    Image(painter = ColorPainter(Color.Red), contentDescription = "Красный прямоугольник")
 }
 
 @Composable
