@@ -77,7 +77,8 @@ class MainActivity : ComponentActivity() {
 //                        MDropdownMenu()
 //                        MCircularProgressIndicator()
 //                        MStringResource()
-                        MImage()
+//                        MImage()
+                        MImageVector()
                     }
                 }
             }
@@ -830,9 +831,18 @@ fun MStringResource() {
 }
 
 @Composable
-@Preview(showBackground = true)
 fun MImage() {
     Image(painter = ColorPainter(Color.Red), contentDescription = "Красный прямоугольник")
+}
+
+@Composable
+@Preview(showBackground = true)
+fun MImageVector() {
+    Image(
+        imageVector = Icons.Filled.Email,
+        contentDescription = "Значок электронной почты",
+        modifier = Modifier.size(200.dp, 150.dp)
+    )
 }
 
 @Composable
